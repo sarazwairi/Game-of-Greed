@@ -1,7 +1,58 @@
 import random
- 
+from collections import Counter
+
 class GameLogic:
-    pass
+    @staticmethod
+    def calculate_score(numbers):
+        score=0
+        dice_counter = Counter(numbers)
+        commnest=dice_counter.most_common()
+
+        for item in commnest:
+        
+                if item[1] == 5:
+                    if item[0] == 1:
+                        score += 3000
+                    else:
+                        score += item[0] * 300
+                elif item[1] == 4:
+                    if item[0] == 1:
+                        score += 2000
+                    else:
+                        score += item[0] * 200
+                elif item[1] == 3:
+                    if item[0] == 1:
+                        score += 1000
+                    else:
+                        score += item[0] * 100
+                elif item[1] == 2:
+                    if item[0] == 1:
+                        score += 200
+                    elif item[0] == 5:
+                        score += 100
+                elif item[1] == 1:
+                    if item[0] == 1:
+                        score += 100
+                    elif item[0] == 5:
+                        score += 50
+                elif len(dice_counter) == 1 and commnest[0][1] == 6 :
+                    if commnest[0][0]==1:
+                        score+=4000
+                    else:
+                        score += commnest[0][0]*400
+                # elif len(dice_counter) == 6  :
+                #     pass
+                # elif len(dice_counter)==3 and commnest[0][1]==2 and commnest[1][1]==2 and commnest[2][1]==2:
+                #     score+=1500
+
+        return score
+
+    
+    def test_straight():
+        pass
+
+
+
 
     @staticmethod
     def roll_dice(value):
