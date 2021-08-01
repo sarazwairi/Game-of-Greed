@@ -9,7 +9,6 @@ def test_single_five():
     expected = 50
     assert actual == expected
 
-
 def test_single_one():
     actual = GameLogic.calculate_score((1,))
     expected = 100
