@@ -10,7 +10,13 @@ class GameLogic:
 
         for item in commnest:
         
-                if item[1] == 5:
+                if len(dice_counter) == 6:
+                    score+=1500
+                    return score
+                elif len(dice_counter)==3 and commnest[0][1]==2:
+                    score+=1500
+                    return score
+                elif item[1] == 5:
                     if item[0] == 1:
                         score += 3000
                     else:
@@ -40,10 +46,7 @@ class GameLogic:
                         score+=4000
                     else:
                         score += commnest[0][0]*400
-                # elif len(dice_counter) == 6  :
-                #     pass
-                # elif len(dice_counter)==3 and commnest[0][1]==2 and commnest[1][1]==2 and commnest[2][1]==2:
-                #     score+=1500
+
 
         return score
 
@@ -61,3 +64,7 @@ class GameLogic:
             nums_list.append(random.randint(1,6))
 
         return tuple(nums_list)
+    
+    
+    lst=(1,2,3,4,5,6)
+    print(Counter(lst))
