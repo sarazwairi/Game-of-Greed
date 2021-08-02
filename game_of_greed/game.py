@@ -2,11 +2,11 @@ from game_of_greed.game_logic import GameLogic
 from game_of_greed.banker import Banker
 
 class Game:
-    def __init__(self,rounds=6):
+    def __init__(self, roller=None):
         self.banker=Banker
-        self.rounds=rounds    
+        self.roller=roller or GameLogic.roll_dice   
     
-    def play(self,roller=None):
+    def play(self):
 
         round_number=0
 
