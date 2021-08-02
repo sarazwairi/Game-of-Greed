@@ -6,37 +6,34 @@ class Game:
         self.banker=Banker
     
     def play(self,roller=None):
+        roller=roller or GameLogic.roll_dice
    
-        round_number=1
+        round_number=0
         dice_num=6
         print("Welcome to Game of Greed")
         print("(y)es to play or (n)o to decline")
         response=input("> ")
         if response=="y" or response=="yes":
             round_number+=1
-            print('Starting round {round_number}')
-            print("Rolling {dice_num} dice...") 
-            start=GameLogic()
-            rolled=start.dice(dice_num)
-            print(rolled)
-            user=input("Enter dice to keep, or (q)uit:")
+            print(f'Starting round {round_number}')
+            print(f"Rolling {dice_num} dice...") 
+
+            rolled=roller(dice_num)
+            print("*** "+" ".join([str(i)for i in rolled])+" ***")
+
+            print("Enter dice to keep, or (q)uit:")
             response=input("> ")
             if response=='q':
                     print("Thanks for playing. You earned 0 points") 
                  
             else:
                     print("OK. Maybe another time")    
-        
-    def roll_dice(self,num):
-        print(f"Rolling {num} dice...")
-        rolls=self._roller(num)
-        print("*** "+" ".join([str(i)for i in rolls])+" ***")
-        return rolls
+
             
                   
             
        
 
 Game()
-# x=Game()
-# x.play()
+x=Game()
+x.play()
