@@ -65,5 +65,5 @@ class GameLogic:
         return tuple(nums_list)
     
     
-    lst=(1,2,3,4,5,6)
-    print(Counter(lst))
+    # lst=(1,2,3,4,5,6)
+    # print(Counter(lst))
