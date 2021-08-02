@@ -51,8 +51,7 @@ class GameLogic:
         return score
 
     
-    def test_straight():
-        pass
+
 
 
 
