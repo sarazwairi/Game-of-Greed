@@ -1,3 +1,4 @@
+import sys
 from game_of_greed.game_logic import GameLogic
 from game_of_greed.banker import Banker
 
@@ -32,12 +33,10 @@ class Game(Banker):
 
             rolled=self.roller(dice_num)
             print("*** "+" ".join([str(i)for i in rolled])+" ***")
-            round_number=round_number+1
             print("Enter dice to keep, or (q)uit:")
             response=input("> ")
             if response=='q':
-                print("Thanks for playing. You earned 0 points")
-                break
+                self.quit()
             else:
                 response = [int(i) for i in response]
                 response_tuple=tuple(response)
@@ -47,14 +46,24 @@ class Game(Banker):
                 print(f'You have {self.banker.shelved} unbanked points and {dice_num} dice remaining')
                 print("(r)oll again, (b)ank your points or (q)uit:")
                 new_response=input("> ")
+                if new_response == 'b':
+                    self.bankscore(round_number)
+                    dice_num=6
+                    self.roller(dice_num)
+                    round_number=round_number+1
+                elif new_response == "r":
+                    self.startgame()
+                elif new_response == 'q':
+                    self.quit()
 
-                
-        
-Game()
-x=Game().play()
+    def bankscore(self, round_number):
+        bank_score = self.banker.bank() 
+        print(f"You banked {bank_score} points in round {round_number}")           
+        print(f"Total score is {self.banker.balance} points")
 
+    def quit(self):
+        print(f"Thanks for playing. You earned {self.banker.balance} points")
+        sys.exit()
 
-
-                  
-            
-       
+# Game()
+# x=Game().play()
