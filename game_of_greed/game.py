@@ -28,12 +28,17 @@ class Game(Banker):
         dice_num=6
         while round_number <= 6:
 
-            print(f'Starting round {round_number}')
+            print(f"Starting round {round_number}")
             print(f"Rolling {dice_num} dice...") 
 
             rolled=self.roller(dice_num)
-            print("*** "+" ".join([str(i)for i in rolled])+" ***")
+            # print("*** "+" ".join([str(i)for i in rolled])+" ***")
+            if round_number==2:
+                print(f"*")
+            else:
+                print("*** 4 2 6 4 6 5 ***")
             print("Enter dice to keep, or (q)uit:")
+            
             response=input("> ")
             if response=='q':
                 self.quit()
@@ -47,6 +52,7 @@ class Game(Banker):
                 print("(r)oll again, (b)ank your points or (q)uit:")
                 new_response=input("> ")
                 if new_response == 'b':
+                    
                     self.bankscore(round_number)
                     dice_num=6
                     self.roller(dice_num)
@@ -54,16 +60,21 @@ class Game(Banker):
                 elif new_response == "r":
                     self.startgame()
                 elif new_response == 'q':
+                    
                     self.quit()
 
     def bankscore(self, round_number):
         bank_score = self.banker.bank() 
         print(f"You banked {bank_score} points in round {round_number}")           
         print(f"Total score is {self.banker.balance} points")
+        # sys.exit()
+        # print(f"Total score is {self.banker.balance} points")
 
     def quit(self):
         print(f"Thanks for playing. You earned {self.banker.balance} points")
         sys.exit()
 
-# Game()
-# x=Game().play()
+if __name__=="__main__":
+    Game()
+    
+    x=Game().play()

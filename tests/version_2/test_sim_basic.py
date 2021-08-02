@@ -23,7 +23,12 @@ def test_single_bank():
         game.play, path="tests/version_2/bank_one_roll_then_quit.sim.txt"
     )
     assert not diffs, diffs
-
+    
+def test_single_bank2():
+    game = Game()
+    diffs = diff(
+        game.play, path="tests/version_2/test_sim.txt")
+    assert not diffs, diffs
 
 def test_bank_first_for_two_rounds():
     game = Game()
