@@ -2,46 +2,40 @@ from game_of_greed.game_logic import GameLogic
 from game_of_greed.banker import Banker
 
 class Game:
-    def __init__(self,rounds=6):
+    def __init__(self):
         self.banker=Banker
-        self.rounds=rounds    
     
     def play(self,roller=None):
-
-        round_number=0
-
+   
+        round_number=1
+        dice_num=6
         print("Welcome to Game of Greed")
         print("(y)es to play or (n)o to decline")
         response=input("> ")
         if response=="y" or response=="yes":
             round_number+=1
-            print(f"Starting round {round_number}")
-            print("Rolling 6 dice...")
-            # play=GameLogic()
-            # lst_number=list(play.roll_dice(1))
-            # string=''
-            # for i in lst_number:
-            #     string+=i+ ' '
-            
-            print('*** 4 4 5 2 3 1 ***')
-            print("Enter dice to keep, or (q)uit:") 
+            print('Starting round {round_number}')
+            print("Rolling {dice_num} dice...") 
+            start=GameLogic()
+            rolled=start.dice(dice_num)
+            print(rolled)
+            user=input("Enter dice to keep, or (q)uit:")
             response=input("> ")
             if response=='q':
-                print("Thanks for playing. You earned 0 points") 
-                
+                    print("Thanks for playing. You earned 0 points") 
+                 
+            else:
+                    print("OK. Maybe another time")    
         
-    # def readline(path):
-    #      with open(path) as f:
-    #         lines = f.read().splitlines()
-    #         return lines
-            
-            
+    def roll_dice(self,num):
+        print(f"Rolling {num} dice...")
+        rolls=self._roller(num)
+        print("*** "+" ".join([str(i)for i in rolls])+" ***")
+        return rolls
             
                   
             
-            
-        else:
-            print("OK. Maybe another time")
+       
 
 Game()
 # x=Game()
