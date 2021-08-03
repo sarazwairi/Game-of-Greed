@@ -21,18 +21,21 @@ class Game(Banker):
     def decline_game(self):
         print("OK. Maybe another time")
 
-    def start_game(self ,round_number=1):
+    def start_game(self ,round_number=1,hot=False):
         self.round_number=round_number
         self.dice_num=6
-        
+        self.hot = hot
         while self.round_number <= 6:
-            print(f'Starting round {self.round_number}')
+            if self.hot==False:
+                print(f'Starting round {self.round_number}')
             print(f"Rolling {self.dice_num} dice...") 
             self.rolled=self.roller(self.dice_num)
             print("*** "+" ".join([str(i)for i in self.rolled])+" ***")
             print("Enter dice to keep, or (q)uit:")
             response=input("> ")
+            self.hot=False
             self.round(response)
+            
  
     def bankscore(self, round_number):
         bank_score = self.banker.bank() 
@@ -44,7 +47,12 @@ class Game(Banker):
         sys.exit()
         
     
-    def re_roll(self):
+    def re_roll(self,response_tuple):
+        hot_dice=GameLogic.calculate_score(response_tuple)
+        if hot_dice == 1500 and len(self.rolled) == 6:
+            self.dice_num=6
+            self.hot=True
+            self.start_game(self.round_number,self.hot)
         print(f"Rolling {self.dice_num} dice...")
         rolled=self.roller(self.dice_num)
         print("*** "+" ".join([str(i)for i in rolled])+" ***")
@@ -79,7 +87,7 @@ class Game(Banker):
                     self.dice_num=6
                     self.round_number=self.round_number+1
                 elif response == "r":
-                    self.re_roll()
+                    self.re_roll(response_tuple)
                 elif response == 'q':
                     self.quit()
 
