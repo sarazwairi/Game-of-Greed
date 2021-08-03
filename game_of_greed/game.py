@@ -49,7 +49,7 @@ class Game(Banker):
                 if new_response == 'b':
                     self.bankscore(round_number)
                     dice_num=6
-                    self.roller(dice_num)
+                    # self.roller(dice_num)
                     round_number=round_number+1
                 elif new_response == "r":
                     self.startgame()
