@@ -8,8 +8,6 @@ class Game(Banker):
     
     def play(self,roller=None):
         self.roller=roller or GameLogic.roll_dice
-   
-        
         print("Welcome to Game of Greed")
         print("(y)es to play or (n)o to decline")
         response=input("> ")
@@ -25,39 +23,17 @@ class Game(Banker):
 
     def start_game(self ,round_number=1):
         self.round_number=round_number
-        dice_num=6
+        self.dice_num=6
+        
         while self.round_number <= 6:
-
             print(f'Starting round {self.round_number}')
-            print(f"Rolling {dice_num} dice...") 
-
-            rolled=self.roller(dice_num)
+            print(f"Rolling {self.dice_num} dice...") 
+            rolled=self.roller(self.dice_num)
             print("*** "+" ".join([str(i)for i in rolled])+" ***")
             print("Enter dice to keep, or (q)uit:")
             response=input("> ")
-            if response=='q':
-                self.quit()
-            else:
-                response = [int(i) for i in response]
-                response_tuple=tuple(response)
-                dice_num=dice_num-len(response_tuple)
-                score=GameLogic.calculate_score(response_tuple)
-                self.banker.shelf(score)
-                print(f'You have {self.banker.shelved} unbanked points and {dice_num} dice remaining')
-                print("(r)oll again, (b)ank your points or (q)uit:")
-                new_response=input("> ")
-                if new_response == 'b':
-                    self.bankscore(self.round_number)
-                    dice_num=6
-                    # self.roller(dice_num)
-                    self.round_number=self.round_number+1
-                elif new_response == "r":
-                    self.round_number=self.round_number+1
-
-                    self.start_game(self.round_number)
-                elif new_response == 'q':
-                    self.quit()
-
+            self.round(response)
+ 
     def bankscore(self, round_number):
         bank_score = self.banker.bank() 
         print(f"You banked {bank_score} points in round {round_number}")           
@@ -67,6 +43,40 @@ class Game(Banker):
         print(f"Thanks for playing. You earned {self.banker.balance} points")
         sys.exit()
         
+    
+    def re_roll(self):
+        print(f"Rolling {self.dice_num} dice...")
+        rolled=self.roller(self.dice_num)
+        print("*** "+" ".join([str(i)for i in rolled])+" ***")
+        print("Enter dice to keep, or (q)uit:")
+        response=input("> ")
+        self.round(response)
+
+
+    def round(self,response):
+        if response=='q':
+                self.quit()
+        else:
+            response = [int(i) for i in response]
+            response_tuple=tuple(response)
+            self.dice_num=self.dice_num-len(response_tuple)
+            score=GameLogic.calculate_score(response_tuple)
+            self.banker.shelf(score)
+            print(f'You have {self.banker.shelved} unbanked points and {self.dice_num} dice remaining')
+            print("(r)oll again, (b)ank your points or (q)uit:")
+            response=input("> ")
+            if response=='q':
+                self.quit()
+            else: 
+                if response == 'b':
+                    self.bankscore(self.round_number)
+                    self.dice_num=6
+                    self.round_number=self.round_number+1
+                elif response == "r":
+                    self.re_roll()
+                elif response == 'q':
+                    self.quit()
+     
         
 if __name__ == "__main__":
     x=Game().play()
