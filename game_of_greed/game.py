@@ -64,5 +64,18 @@ class Game(Banker):
     def quit(self):
         print(f"Thanks for playing. You earned {self.banker.balance} points")
         sys.exit()
+
+
+    def zelchRoundOver(self,round_number):
+
+        print('****************************************')
+        print('**        Zilch!!! Round over         **')
+        print('****************************************')
+        self.banker.clear_shelf()
+        print(f'You banked {self.banker.shelved} points in round {round_number}')
+        print(f'Total score is {self.banker.balance} points')
+        self.start_game(round_number)
+
+
 if __name__ == "__main__":
     x=Game().play()
