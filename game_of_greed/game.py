@@ -42,6 +42,8 @@ class Game(Banker):
                 response_tuple=tuple(response)
                 dice_num=dice_num-len(response_tuple)
                 score=GameLogic.calculate_score(response_tuple)
+                if score==0 :
+                    self.zelchRoundOver(round_number)
                 self.banker.shelf(score)
                 print(f'You have {self.banker.shelved} unbanked points and {dice_num} dice remaining')
                 print("(r)oll again, (b)ank your points or (q)uit:")
@@ -53,6 +55,7 @@ class Game(Banker):
                     round_number=round_number+1
                 elif new_response == "r":
                     self.startgame()
+                   
                 elif new_response == 'q':
                     self.quit()
 
@@ -78,4 +81,5 @@ class Game(Banker):
 
 
 if __name__ == "__main__":
-    x=Game().play()
+    x=Game()
+    x.play()
