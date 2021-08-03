@@ -28,8 +28,8 @@ class Game(Banker):
         while self.round_number <= 6:
             print(f'Starting round {self.round_number}')
             print(f"Rolling {self.dice_num} dice...") 
-            rolled=self.roller(self.dice_num)
-            print("*** "+" ".join([str(i)for i in rolled])+" ***")
+            self.rolled=self.roller(self.dice_num)
+            print("*** "+" ".join([str(i)for i in self.rolled])+" ***")
             print("Enter dice to keep, or (q)uit:")
             response=input("> ")
             self.round(response)
@@ -48,9 +48,15 @@ class Game(Banker):
         print(f"Rolling {self.dice_num} dice...")
         rolled=self.roller(self.dice_num)
         print("*** "+" ".join([str(i)for i in rolled])+" ***")
-        print("Enter dice to keep, or (q)uit:")
-        response=input("> ")
-        self.round(response)
+        zilch = GameLogic.calculate_score(rolled)
+
+        if zilch ==0:
+            self.zillcher(self.round_number)
+            self.start_game(self.round_number+1)
+        else:
+            print("Enter dice to keep, or (q)uit:")
+            response=input("> ")
+            self.round(response)
 
 
     def round(self,response):
@@ -76,7 +82,14 @@ class Game(Banker):
                     self.re_roll()
                 elif response == 'q':
                     self.quit()
-     
+
+    def zillcher(self,round_number):
+        self.clear_shelf()
+        print("""****************************************
+**        Zilch!!! Round over         **
+****************************************""")
+        print(f'You banked {self.banker.balance} points in round {round_number}')
+        print(f'Total score is {self.banker.balance} points')
         
 if __name__ == "__main__":
     x=Game().play()
