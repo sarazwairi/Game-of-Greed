@@ -64,6 +64,5 @@ class Game(Banker):
     def quit(self):
         print(f"Thanks for playing. You earned {self.banker.balance} points")
         sys.exit()
-
-# Game()
-# x=Game().play()
+if __name__ == "__main__":
+    x=Game().play()
