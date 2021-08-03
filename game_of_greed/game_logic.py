@@ -51,7 +51,23 @@ class GameLogic:
         return score
 
     
+    @staticmethod
+    def get_scorers(input):
+        ## tuple--->tuple
+        calculate=Counter(input)
+        if len(calculate)==6:#straight
+            return input
+        if len(calculate)==3:#pairs
+            if all(value ==2 for value in calculate.values()):
+                return input
+        result=[]
 
+        for number,count in calculate.items():
+            if count>=3:
+                result+=[number]*count
+            elif number==1 or number==5:
+                result+=[number]*count
+        return result
 
 
 
