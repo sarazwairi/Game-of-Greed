@@ -23,12 +23,12 @@ class Game(Banker):
     def decline_game(self):
         print("OK. Maybe another time")
 
-    def start_game(self):
-        round_number=1
+    def start_game(self ,round_number=1):
+        self.round_number=round_number
         dice_num=6
-        while round_number <= 6:
+        while self.round_number <= 6:
 
-            print(f'Starting round {round_number}')
+            print(f'Starting round {self.round_number}')
             print(f"Rolling {dice_num} dice...") 
 
             rolled=self.roller(dice_num)
@@ -47,12 +47,14 @@ class Game(Banker):
                 print("(r)oll again, (b)ank your points or (q)uit:")
                 new_response=input("> ")
                 if new_response == 'b':
-                    self.bankscore(round_number)
+                    self.bankscore(self.round_number)
                     dice_num=6
                     # self.roller(dice_num)
-                    round_number=round_number+1
+                    self.round_number=self.round_number+1
                 elif new_response == "r":
-                    self.startgame()
+                    self.round_number=self.round_number+1
+
+                    self.start_game(self.round_number)
                 elif new_response == 'q':
                     self.quit()
 
@@ -64,5 +66,7 @@ class Game(Banker):
     def quit(self):
         print(f"Thanks for playing. You earned {self.banker.balance} points")
         sys.exit()
+        
+        
 if __name__ == "__main__":
     x=Game().play()
