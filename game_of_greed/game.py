@@ -32,7 +32,8 @@ class Game(Banker):
             print("*** "+" ".join([str(i)for i in self.rolled])+" ***")
             print("Enter dice to keep, or (q)uit:")
             response=input("> ")
-            self.round(response)
+            self.check_valid(response,self.rolled)
+ 
  
     def bankscore(self, round_number):
         bank_score = self.banker.bank() 
@@ -56,7 +57,8 @@ class Game(Banker):
         else:
             print("Enter dice to keep, or (q)uit:")
             response=input("> ")
-            self.round(response)
+            self.check_valid(response,rolled)
+            
 
 
     def round(self,response):
@@ -82,6 +84,25 @@ class Game(Banker):
                     self.re_roll()
                 elif response == 'q':
                     self.quit()
+                    
+                    
+    def check_valid(self,response,rolled):
+        if response == 'q':
+            self.quit()
+        else:    
+            lst=[]
+            for i in response:
+                lst.append(int(i))
+            valid=GameLogic.validate_keepers(rolled,tuple(lst))
+            if valid:
+                self.round(response)
+            else:
+                print("Cheater!!! Or possibly made a typo...")
+                print("*** "+" ".join([str(i)for i in rolled])+" ***")
+                print("Enter dice to keep, or (q)uit:")
+                response=input("> ")
+                self.round(response)
+
 
     def zillcher(self,round_number):
         self.clear_shelf()
@@ -91,5 +112,10 @@ class Game(Banker):
         print(f'You banked {self.banker.balance} points in round {round_number}')
         print(f'Total score is {self.banker.balance} points')
         
+        
+            
+                 
 if __name__ == "__main__":
     x=Game().play()
+    # j=GameLogic.validate_keepers((1,2,3,4,5,5),(2,))
+    # print(j)
