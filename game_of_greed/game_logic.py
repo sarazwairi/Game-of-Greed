@@ -69,6 +69,23 @@ class GameLogic:
                 result+=[number]*count
         return result
 
+    @staticmethod
+    def validate_keepers(dice_list, dice_input):
+        output_one = Counter(dice_input).most_common()
+        output_two = Counter(dice_list).most_common()
+        if len(output_one) > len(output_two):
+          return True
+        result=[]
+        valid_game = False
+        for i in output_one:
+             for j in output_two:
+                 if i[0] == j[0]:
+                     if i[1] <= j[1]:
+                          result.append(1)
+        if len(output_one) == len(result):
+            valid_game = True
+        return valid_game
+
 
 
 
