@@ -35,6 +35,8 @@ class Game(Banker):
             response=input("> ")
             self.hot=False
             self.check_valid(response,self.rolled)
+        print(f"Thanks for playing. You earned {self.banker.balance} points")
+
  
            
             
@@ -71,10 +73,12 @@ class Game(Banker):
 
 
     def round(self,response):
+
         if response=='q':
                 self.quit()
         else:
-            response = [int(i) for i in response]
+            response = [int(i) for i in response if i.isdigit()]
+            
             response_tuple=tuple(response)
             self.dice_num=self.dice_num-len(response_tuple)
             score=GameLogic.calculate_score(response_tuple)
